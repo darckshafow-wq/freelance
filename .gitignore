@@ -1,0 +1,23 @@
+# XAMPP / Local Server
+/config/database.php
+/tmp/
+/logs/
+.DS_Store
+Thumbs.db
+
+# Dependencies
+/vendor/
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Sensitive data
+.env
+*.sql

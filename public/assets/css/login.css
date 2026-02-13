@@ -1,0 +1,259 @@
+/* Login Page - Premium SaaS Refinement */
+@import url('https://fonts.googleapis.com/css2?family=HK+Grotesk:wght@400;600;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-600: #475569;
+  --slate-400: #94a3b8;
+  --slate-200: #e2e8f0;
+  --slate-50: #f8fafc;
+  --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--slate-50);
+  color: var(--slate-800);
+  overflow-x: hidden;
+}
+
+.login-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Left Panel - Visual & Brand */
+.intro-left {
+  flex: 1.2;
+  background-color: var(--slate-900);
+  background-image: radial-gradient(circle at 0% 0%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+  position: relative;
+}
+
+.intro-left .content-wrapper {
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+}
+
+.intro-left .brand {
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.intro-left .brand::before {
+  content: '💠';
+  font-size: 1.5rem;
+}
+
+.intro-left h2 {
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.intro-left .testimonial {
+  font-size: 1.125rem;
+  color: var(--slate-400);
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.illustration {
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: perspective(1000px) rotateY(-5deg);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.illustration:hover {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+/* Right Panel - Login Form */
+.intro-right {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-container h1 {
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  margin-bottom: 0.5rem;
+}
+
+.signup {
+  font-size: 0.875rem;
+  color: var(--slate-600);
+  margin-bottom: 2.5rem;
+}
+
+.signup a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  background-color: var(--slate-50);
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.forgot {
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+.forgot a {
+  font-size: 0.875rem;
+  color: var(--slate-600);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot a:hover {
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-family: 'HK Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 2.5rem 0;
+  color: var(--slate-400);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.divider::before { margin-right: 1rem; }
+.divider::after { margin-left: 1rem; }
+
+/* Social Buttons */
+.social-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.btn-google, .btn-linkedin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: var(--slate-800);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-google:hover, .btn-linkedin:hover {
+  background-color: var(--slate-50);
+  border-color: var(--slate-400);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .intro-left {
+    display: none;
+  }
+  .intro-right {
+    padding: 2rem;
+  }
+}

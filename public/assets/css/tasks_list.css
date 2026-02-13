@@ -1,0 +1,396 @@
+/* ========================================
+   TASK LIST - PREMIUM MODERN DESIGN
+   Higher specificity to override dashboard.css
+   ======================================== */
+
+/* Container & Layout */
+.tasks-content {
+    animation: fadeIn 0.6s ease-out !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Header Premium */
+.content-wrapper .section-header,
+.public-container .section-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    margin-bottom: 2.5rem !important;
+    padding-bottom: 2rem !important;
+    border-bottom: 2px solid #f1f5f9 !important;
+    position: relative !important;
+}
+
+.content-wrapper .section-header::after,
+.public-container .section-header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 120px !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%) !important;
+    border-radius: 3px !important;
+    animation: slideIn 0.8s ease-out !important;
+}
+
+@keyframes slideIn {
+    from { width: 0; }
+    to { width: 120px; }
+}
+
+/* Title Area */
+.content-title-area h1 {
+    font-size: 2.75rem !important;
+    font-weight: 900 !important;
+    margin-bottom: 0.75rem !important;
+    background: linear-gradient(135deg, #0f172a 0%, #4f46e5 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.1 !important;
+}
+
+.content-title-area p {
+    color: #64748b !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    line-height: 1.6 !important;
+}
+
+/* Tasks Grid */
+.tasks-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
+    gap: 2.25rem !important;
+}
+
+/* Premium Task Cards */
+.tasks-grid .task-card {
+    background: #fff !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.03) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 1px solid #f1f5f9 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+}
+
+.tasks-grid .task-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%) !important;
+    opacity: 0 !important;
+    transition: opacity 0.4s ease !important;
+}
+
+.tasks-grid .task-card:hover::before {
+    opacity: 1 !important;
+}
+
+.tasks-grid .task-card:hover {
+    transform: translateY(-14px) scale(1.02) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+    border-color: #e0e7ff !important;
+}
+
+/* Card Header */
+.tasks-grid .task-card-header {
+    padding: 1.75rem 2rem 0.75rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.tasks-grid .category-badge {
+    padding: 0.55rem 1.1rem !important;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+    border-radius: 12px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover .category-badge {
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%) !important;
+    color: #4f46e5 !important;
+    border-color: #c7d2fe !important;
+    transform: scale(1.05) !important;
+}
+
+.tasks-grid .status-marker {
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 50% !important;
+    border: 2.5px solid #fff !important;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover .status-marker {
+    transform: scale(1.2) !important;
+    box-shadow: 0 0 16px rgba(0,0,0,0.3) !important;
+}
+
+.tasks-grid .status-marker.remote { background: #10b981 !important; }
+.tasks-grid .status-marker.onsite { background: #f59e0b !important; }
+
+/* Card Body */
+.tasks-grid .task-card-body {
+    padding: 0 2rem 2rem !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.15rem !important;
+}
+
+.tasks-grid .task-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 1.25rem !important;
+}
+
+.tasks-grid .task-card-body h3 {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    color: #0f172a !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    flex: 1 !important;
+    transition: color 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover h3 {
+    color: #4f46e5 !important;
+}
+
+.tasks-grid .task-price {
+    font-size: 1.75rem !important;
+    font-weight: 900 !important;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    white-space: nowrap !important;
+    transition: all 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover .task-price {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    transform: scale(1.05) !important;
+}
+
+.tasks-grid .task-price span {
+    font-size: 1rem !important;
+}
+
+/* Meta List */
+.tasks-grid .task-meta-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+    padding: 1.15rem 0 !important;
+    border-top: 1px solid #f1f5f9 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.tasks-grid .task-meta-item {
+    font-size: 0.88rem !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    padding: 0.5rem 0.95rem !important;
+    background: #f8fafc !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover .task-meta-item {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    transform: translateY(-2px) !important;
+}
+
+.tasks-grid .task-meta-item .icon {
+    font-size: 1.1rem !important;
+}
+
+/* Description */
+.tasks-grid .task-desc {
+    color: #64748b !important;
+    font-size: 0.98rem !important;
+    line-height: 1.7 !important;
+    margin: 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+
+/* Card Footer */
+.tasks-grid .task-card-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: auto !important;
+    gap: 1rem !important;
+}
+
+.tasks-grid .tags-container {
+    display: flex !important;
+    gap: 0.6rem !important;
+    flex-wrap: wrap !important;
+}
+
+.tasks-grid .tag {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+    padding: 0.3rem 0.7rem !important;
+    background: #f8fafc !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.tasks-grid .task-card:hover .tag {
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Details Button */
+.tasks-grid .btn-card-more {
+    padding: 0.95rem 1.95rem !important;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    border: none !important;
+    border-radius: 16px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.12) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.tasks-grid .btn-card-more::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent) !important;
+    transition: left 0.5s ease !important;
+}
+
+.tasks-grid .btn-card-more:hover::before {
+    left: 100% !important;
+}
+
+.tasks-grid .btn-card-more:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+    transform: translateX(6px) scale(1.05) !important;
+    box-shadow: 0 12px 20px -6px rgba(79, 70, 229, 0.35) !important;
+}
+
+.tasks-grid .btn-card-more span {
+    transition: transform 0.3s !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+}
+
+.tasks-grid .btn-card-more:hover span {
+    transform: translateX(5px) !important;
+}
+
+/* Entrance Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tasks-grid .task-card {
+    animation: fadeInUp 0.7s ease backwards !important;
+}
+
+.tasks-grid .task-card:nth-child(1) { animation-delay: 0.1s !important; }
+.tasks-grid .task-card:nth-child(2) { animation-delay: 0.15s !important; }
+.tasks-grid .task-card:nth-child(3) { animation-delay: 0.2s !important; }
+.tasks-grid .task-card:nth-child(4) { animation-delay: 0.25s !important; }
+.tasks-grid .task-card:nth-child(5) { animation-delay: 0.3s !important; }
+.tasks-grid .task-card:nth-child(6) { animation-delay: 0.35s !important; }
+.tasks-grid .task-card:nth-child(7) { animation-delay: 0.4s !important; }
+.tasks-grid .task-card:nth-child(8) { animation-delay: 0.45s !important; }
+.tasks-grid .task-card:nth-child(9) { animation-delay: 0.5s !important; }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .tasks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+        gap: 2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .tasks-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .content-title-area h1 {
+        font-size: 2.25rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-title-area h1 {
+        font-size: 1.85rem !important;
+    }
+    
+    .tasks-grid .task-card-body h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .tasks-grid .task-price {
+        font-size: 1.5rem !important;
+    }
+}
