@@ -7,6 +7,9 @@ require_once __DIR__ . '/../app/controllers/WelcomeController.php';
 require_once __DIR__ . '/../app/controllers/AdminController.php';
 require_once __DIR__ . '/../app/controllers/TaskController.php';
 require_once __DIR__ . '/../app/controllers/ApplicationController.php'; // ✅ Ajout manquant
+require_once __DIR__ . '/../app/controllers/ReviewController.php';
+require_once __DIR__ . '/../app/controllers/MessageController.php';
+require_once __DIR__ . '/../app/controllers/NotificationController.php';
 
 // Connexion à la base
 require_once __DIR__ . '/../app/core/database.php';
@@ -130,7 +133,32 @@ switch ($page) {
             header('Location: index.php?page=login');
             exit;
         }
+        $messageController = new MessageController($pdo);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send') {
+            $messageController->send();
+        }
         include __DIR__ . '/../public/dashboard_page/shared/messages.php';
+        break;
+
+    case 'notifications':
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+        $notifController = new NotificationController($pdo);
+        if (isset($_GET['action']) && $_GET['action'] === 'mark_read' && isset($_GET['id'])) {
+            $notifController->markRead($_GET['id']);
+        }
+        $notifications = $notifController->index();
+        include __DIR__ . '/../public/dashboard_page/shared/notifications.php';
+        break;
+
+    case 'add_review':
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+        (new ReviewController($pdo))->add();
         break;
 
     case 'support':
