@@ -86,6 +86,7 @@ body {
   background: linear-gradient(120deg, var(--accent-color) 0%, #fff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   display: inline-block;
 }
 
@@ -265,22 +266,38 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hero {
-    padding: 80px 20px 120px;
+  .hero-welcome {
+    flex-direction: column;
+    padding: 100px 5% 60px;
+    text-align: center;
+    gap: 2rem;
   }
   
-  .hero h1 {
-    font-size: 2.5rem;
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .cta-welcome {
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-welcome h1 {
+    font-size: 2.2rem;
   }
   
-  .features {
-    margin-top: -40px;
+  .hero-illustration {
+    display: none;
+  }
+
+  .features-simplified {
+    margin-top: 2rem;
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .feature-box {
-    text-align: center;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
   }
   
   .feature-box h2 {

@@ -12,9 +12,20 @@
     </div>
 
     <div class="header-right">
-        <div class="notification-btn">
+        <?php
+        require_once __DIR__ . '/../app/models/message.php';
+        require_once __DIR__ . '/../app/core/database.php';
+        $msgModel = new message((new Database())->getConnection());
+        $unreadCount = $msgModel->countUnreadMessages($_SESSION['user']['id']);
+        ?>
+        <a href="index.php?page=messages" class="notification-btn" title="Notification Center" style="position: relative; text-decoration: none; color: inherit;">
             <span class="icon">🔔</span>
-        </div>
+            <?php if ($unreadCount > 0): ?>
+                <span style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; border: 2px solid white;">
+                    <?= $unreadCount ?>
+                </span>
+            <?php endif; ?>
+        </a>
         
         <div class="avatar-container">
             <div class="user-info" style="display: block;">
@@ -39,4 +50,3 @@
         <?= $_SESSION['error']; unset($_SESSION['error']); ?>
     </div>
 <?php endif; ?>
-</content>

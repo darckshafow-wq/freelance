@@ -88,7 +88,23 @@ class ApplicationController {
 
             if ($applicationId && in_array($status, ['accepted', 'rejected'])) {
                 if ($this->applicationModel->updateStatus($applicationId, $status)) {
-                    $_SESSION['success'] = "Statut de la candidature mis à jour.";
+                    if ($status === 'accepted') {
+                        // Recruitment logic
+                        $app = $this->applicationModel->getApplicationById($applicationId);
+                        if ($app) {
+                            // Update task status to in_progress
+                            require_once __DIR__ . '/../models/tasks.php';
+                            $taskModel = new Tasks($this->applicationModel->getPdo());
+                            $taskModel->setStatus($app['task_id'], 'in_progress');
+                            
+                            // Reject others
+                            $this->applicationModel->rejectOthers($app['task_id'], $applicationId);
+                            
+                            $_SESSION['success'] = "Freelance recruté ! La mission est maintenant en cours.";
+                        }
+                    } else {
+                        $_SESSION['success'] = "Candidature refusée.";
+                    }
                 } else {
                     $_SESSION['error'] = "Erreur lors de la mise à jour.";
                 }

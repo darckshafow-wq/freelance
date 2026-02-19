@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../../includes/header.php'; ?>
 
-<link rel="stylesheet" href="/free_lance_p/public/assets/css/welcome.css">
+<link rel="stylesheet" href="/free_lance_p/public/assets/css/welcome.css?v=1.1">
 
 <!-- Hero Section -->
 <header class="hero-welcome">

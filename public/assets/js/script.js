@@ -64,19 +64,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggles = document.querySelectorAll('.sidebar-toggle, .sidebar-toggle-btn');
     
     if (sidebar && toggles.length > 0) {
-        // Check for saved state
+        // Check for saved state (Desktop only)
         const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-        if (isCollapsed) {
+        if (isCollapsed && window.innerWidth > 768) {
             sidebar.classList.add('collapsed');
         }
 
         toggles.forEach(btn => {
             btn.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-                const collapsed = sidebar.classList.contains('collapsed');
-                localStorage.setItem('sidebarCollapsed', collapsed);
+                if (window.innerWidth <= 768) {
+                    // Mobile: Toggle a specific visibility class
+                    sidebar.classList.toggle('mobile-active');
+                } else {
+                    // Desktop: Toggle the collapse state
+                    sidebar.classList.toggle('collapsed');
+                    const collapsed = sidebar.classList.contains('collapsed');
+                    localStorage.setItem('sidebarCollapsed', collapsed);
+                }
             });
         });
+
+        // Close mobile sidebar when clicking main content
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+            mainContent.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('mobile-active');
+                }
+            });
+        }
     }
 
     // --- 6. Table Sorting (Client-side) ---
@@ -128,4 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-});
+}
+
+ 
+);

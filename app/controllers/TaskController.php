@@ -70,4 +70,46 @@ class TaskController {
         $tasks = $this->taskModel->getPendingTasks();
         include __DIR__ . '/../../public/tasks_page/tasks_pending.php';
     }
+
+    public function showCollaboration($taskId) {
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+
+        $task = $this->taskModel->getTaskById($taskId);
+        if (!$task) {
+            header('Location: index.php?page=dashboard');
+            exit;
+        }
+
+        // Fetch the accepted application to know who is the partner
+        require_once __DIR__ . '/../models/Applications.php';
+        $appModel = new Applications($this->taskModel->getPdo());
+        $stmt = $this->taskModel->getPdo()->prepare("SELECT * FROM application WHERE task_id = ? AND status = 'accepted' LIMIT 1");
+        $stmt->execute([$taskId]);
+        $app = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Access Control: Only Client or Accepted Freelancer
+        $isClient = ($_SESSION['user']['id'] == $task['user_id']);
+        $isFreelancer = ($app && $_SESSION['user']['id'] == $app['freelance_id']);
+        
+        if (!$isClient && !$isFreelancer) {
+            header('Location: index.php?page=dashboard');
+            exit;
+        }
+
+        // Fetch team members
+        require_once __DIR__ . '/../models/Team.php';
+        $teamModel = new Team($this->taskModel->getPdo());
+        $team = $teamModel->getMembers($taskId);
+
+        // Fetch sub-tasks
+        require_once __DIR__ . '/../models/SubTask.php';
+        $subTaskModel = new SubTask($this->taskModel->getPdo());
+        $subTasks = $subTaskModel->getByTaskId($taskId);
+        $progress = $subTaskModel->getProgress($taskId);
+
+        include __DIR__ . '/../../public/collaboration_page/collaboration.php';
+    }
 }

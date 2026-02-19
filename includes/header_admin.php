@@ -1,3 +1,5 @@
+<!-- Dashboard Header Admin -->
+<header class="dashboard-header">
     <div class="header-left">
         <button class="sidebar-toggle-btn" id="headerSidebarToggle" title="Menu">
             <span class="icon">☰</span>

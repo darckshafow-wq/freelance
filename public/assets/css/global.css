@@ -72,3 +72,24 @@ a {
   margin: 0 auto;
   padding: 0 20px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+  }
+  
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -7,6 +7,9 @@ require_once __DIR__ . '/../app/controllers/WelcomeController.php';
 require_once __DIR__ . '/../app/controllers/AdminController.php';
 require_once __DIR__ . '/../app/controllers/TaskController.php';
 require_once __DIR__ . '/../app/controllers/ApplicationController.php'; // ✅ Ajout manquant
+require_once __DIR__ . '/../app/controllers/FreelanceController.php';
+require_once __DIR__ . '/../app/controllers/ConversationController.php';
+require_once __DIR__ . '/../app/controllers/TeamController.php';
 
 // Connexion à la base
 require_once __DIR__ . '/../app/core/database.php';
@@ -17,8 +20,51 @@ $page = $_GET['page'] ?? 'welcome';
 
 // Sécurisation des paramètres GET (id par exemple)
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$userId = $_SESSION['user']['id'] ?? 0;
+
 
 switch ($page) {
+    case 'invite_member':
+        (new TeamController($pdo))->addMember();
+        break;
+    // ... existing cases ...
+    case 'conversation':
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+        $taskId = $_GET['task_id'] ?? 0;
+        $user1 = $_SESSION['user']['id'];
+        $user2 = $_GET['receiver_id'] ?? 0;
+        (new ConversationController($pdo))->show($taskId, $user1, $user2);
+        break;
+
+    case 'send_message':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $taskId = $_POST['task_id'] ?? 0;
+            $senderId = $_SESSION['user']['id'] ?? 0;
+            $receiverId = $_POST['receiver_id'] ?? 0;
+            $content = $_POST['content'] ?? '';
+            (new ConversationController($pdo))->sendMessage($taskId, $senderId, $receiverId, $content);
+        }
+        break;
+
+    case 'get_new_messages':
+        $taskId = $_GET['task_id'] ?? 0;
+        $user1 = $_SESSION['user']['id'] ?? 0;
+        $user2 = $_GET['receiver_id'] ?? 0;
+        $lastId = $_GET['last_id'] ?? 0;
+        (new ConversationController($pdo))->getNewMessages($taskId, $user1, $user2, $lastId);
+        break;
+
+    case 'collaboration':
+        if ($id) {
+            (new TaskController($pdo))->showCollaboration($id);
+        } else {
+            header('Location: index.php?page=dashboard');
+        }
+        break;
+
     case 'dashboard':
         if (!isset($_SESSION['user'])) {
             header('Location: index.php?page=login');
@@ -130,7 +176,7 @@ switch ($page) {
             header('Location: index.php?page=login');
             exit;
         }
-        include __DIR__ . '/../public/dashboard_page/shared/messages.php';
+        (new ConversationController($pdo))->index($_SESSION['user']['id']);
         break;
 
     case 'support':
@@ -203,7 +249,7 @@ case 'delete_task':
 
     // --- Freelance Dashboard ---
     case 'freelance_dashboard':
-        include __DIR__ . '/../public/dashboard_page/freelance/dashboard_freelance.php';
+        (new FreelanceController($pdo))->dashboard($userId);
         break;
     
     case 'tasks_list':

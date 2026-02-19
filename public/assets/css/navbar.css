@@ -111,6 +111,10 @@
 
 /* Response for Navbar */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 5%;
+  }
+
   .search-bar {
     display: none;
   }
@@ -119,8 +123,17 @@
     display: none;
   }
   
+  .nav-right {
+    gap: 0.75rem;
+  }
+
   .btn-publish {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    width: auto; /* Overriding common .btn width: 100% */
+  }
+
+  .dashboard-header-public {
+    padding: 0 1rem !important;
   }
 }

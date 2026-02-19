@@ -4,20 +4,22 @@ require_once __DIR__ . '/../core/Database.php';
 class User {
     private $pdo;
 
-    public function __construct() {
-        $db = new Database();
-        $this->pdo = $db->getConnection();
+    public function __construct($pdo = null) {
+        if ($pdo) {
+            $this->pdo = $pdo;
+        } else {
+            $db = new Database();
+            $this->pdo = $db->getConnection();
+        }
     }
 
     public function create($name, $email, $password, $role) {
-        // Vérifier si l'email existe déjà
         $stmt = $this->pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             throw new Exception("Cet email est déjà enregistré !");
         }
 
-        // Sinon on insère
         $stmt = $this->pdo->prepare(
             "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)"
         );
@@ -28,11 +30,23 @@ class User {
     public function login($email, $password) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            return $user; // connexion réussie
+            return $user;
         }
-        return false; // échec
+        return false;
+    }
+
+    public function getUserById($id) {
+        $stmt = $this->pdo->prepare("SELECT id, name, email, role FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserByEmail($email) {
+        $stmt = $this->pdo->prepare("SELECT id, name, email, role FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

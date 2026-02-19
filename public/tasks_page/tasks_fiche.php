@@ -36,25 +36,25 @@
             <?php endif; ?>
 
             <form method="POST" action="index.php?page=create_task">
-                <div style="margin-bottom: 1.5rem;">
-                    <label for="title" style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--text-dark);">Titre de la mission *</label>
-                    <input type="text" id="title" name="title" required class="search-input" style="width:100%; background:#fff; border-radius:8px; padding:0.8rem;" placeholder="Ex: Développement site E-commerce">
+                <div class="form-group">
+                    <label for="title">Titre de la mission *</label>
+                    <input type="text" id="title" name="title" required class="search-input" placeholder="Ex: Développement site E-commerce">
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                    <div>
-                        <label for="price" style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--text-dark);">Budget (EUR) *</label>
-                        <input type="number" id="price" name="price" required min="0" step="0.01" class="search-input" style="width:100%; background:#fff; border-radius:8px; padding:0.8rem;" placeholder="0.00">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Budget (EUR) *</label>
+                        <input type="number" id="price" name="price" required min="0" step="0.01" class="search-input" placeholder="0.00">
                     </div>
-                    <div>
-                        <label for="deadline" style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--text-dark);">Date limite</label>
-                        <input type="date" id="deadline" name="deadline" class="search-input" style="width:100%; background:#fff; border-radius:8px; padding:0.8rem;">
+                    <div class="form-group">
+                        <label for="deadline">Date limite</label>
+                        <input type="date" id="deadline" name="deadline" class="search-input">
                     </div>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                    <label for="localisation" style="display:block; margin-bottom:0.5rem; font-weight:600; color:var(--text-dark);">Localisation *</label>
-                    <input type="text" id="localisation" name="localisation" required class="search-input" style="width:100%; background:#fff; border-radius:8px; padding:0.8rem;" placeholder="Ex: Paris (ou Télétravail)">
+                <div class="form-group">
+                    <label for="localisation">Localisation *</label>
+                    <input type="text" id="localisation" name="localisation" required class="search-input" placeholder="Ex: Paris (ou Télétravail)">
                 </div>
 
                 <div style="margin-bottom: 1.5rem;">

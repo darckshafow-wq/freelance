@@ -8,6 +8,10 @@ class Tasks {
         $this->pdo = $pdo;
     }
 
+    public function getPdo() {
+        return $this->pdo;
+    }
+
     /**
      * Créer une nouvelle tâche
      */
@@ -137,5 +141,10 @@ class Tasks {
             ':deadline'    => $data['deadline'],
             ':is_permanent'=> $data['is_permanent']
         ]);
+    }
+
+    public function setStatus(int $id, string $status): bool {
+        $stmt = $this->pdo->prepare("UPDATE tasks SET status = ? WHERE id = ?");
+        return $stmt->execute([$status, $id]);
     }
 }

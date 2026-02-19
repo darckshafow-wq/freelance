@@ -41,7 +41,10 @@
                                     <td><?= htmlspecialchars($app['client_name']) ?></td>
                                     <td><span style="font-weight:600;"><?= number_format($app['bid_price'], 0, ',', ' ') ?> €</span></td>
                                     <td>
-                                        <button class="btn" style="padding:4px 8px; font-size:0.8rem; background:#f3f4f6;" onclick="alert('Message: <?= addslashes(htmlspecialchars($app['message'])) ?>')">Voir msg</button>
+                                        <div style="display:flex; gap:5px;">
+                                            <button class="btn" style="padding:4px 8px; font-size:0.8rem; background:#f3f4f6;" onclick="alert('Message: <?= addslashes(htmlspecialchars($app['message'])) ?>')">Voir msg</button>
+                                            <a href="index.php?page=conversation&task_id=<?= $app['task_id'] ?>&receiver_id=<?= $app['client_id'] ?>" class="btn" style="padding:4px 8px; font-size:0.8rem; background:#3b82f6; color:white; text-decoration:none;">💬 Chat</a>
+                                        </div>
                                     </td>
                                     <td>
                                         <?php

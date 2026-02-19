@@ -220,14 +220,24 @@ select:focus, .form-input:focus {
   }
   
   .intro-left {
-    padding: 3rem 2rem;
+    display: none; /* Hide hero on mobile to focus on form */
   }
   
   .intro-right {
-    padding: 3rem 2rem;
+    padding: 2.5rem 1.5rem;
+    min-height: auto;
   }
   
   .illustration {
     display: none;
+  }
+
+  .registration-form h1 {
+    font-size: 1.75rem;
+  }
+  
+  .social-buttons {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 }

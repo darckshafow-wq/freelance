@@ -24,32 +24,57 @@
             <a href="index.php?page=create_task" class="btn btn-primary">➕ Publier une mission</a>
         </div>
 
-        <!-- Stats cards -->
+        <!-- Current Projects Table -->
+        <?php
+        try {
+            require_once __DIR__ . '/../../../app/core/database.php';
+            $db = (new Database())->getConnection();
+            $stmt = $db->prepare("SELECT t.*, u.name as freelance_name, a.id as application_id 
+                FROM tasks t 
+                LEFT JOIN application a ON t.id = a.task_id AND a.status = 'accepted'
+                LEFT JOIN users u ON a.freelance_id = u.id
+                WHERE t.user_id = ? 
+                ORDER BY t.created_at DESC LIMIT 5");
+            $stmt->execute([$_SESSION['user']['id']]);
+            $recentTasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Dashboard client query error: " . $e->getMessage());
+            $recentTasks = [];
+            $db = (new Database())->getConnection(); // Still need connection for other parts
+        }
+
+        // Stats counts
+        $taskModel = new Tasks($db);
+        $totalPublished = $taskModel->countPublishedTasks();
+        $totalInProgress = $db->prepare("SELECT COUNT(*) FROM tasks WHERE user_id = ? AND status = 'in_progress'");
+        $totalInProgress->execute([$_SESSION['user']['id']]);
+        $countInProgress = $totalInProgress->fetchColumn();
+        ?>
+        
         <section class="stats-grid">
             <div class="stat-card">
                 <div class="stat-info">
                     <h3>Missions Publiées</h3>
-                    <div class="stat-value">3</div>
+                    <div class="stat-value"><?= $totalPublished ?></div>
                 </div>
                 <div class="stat-icon bg-blue">📢</div>
             </div>
             <div class="stat-card">
                 <div class="stat-info">
                     <h3>Projets en cours</h3>
-                    <div class="stat-value">1</div>
+                    <div class="stat-value"><?= $countInProgress ?></div>
                 </div>
                 <div class="stat-icon bg-orange">🔥</div>
             </div>
             <div class="stat-card">
                 <div class="stat-info">
                     <h3>Dépenses (Mois)</h3>
-                    <div class="stat-value">1 200 €</div>
+                    <div class="stat-value">0 €</div>
                 </div>
                 <div class="stat-icon bg-green">💳</div>
             </div>
         </section>
 
-        <!-- Current Projects Table -->
         <section class="table-card">
             <div class="table-header">
                 <h3>Mes Projets Récents</h3>
@@ -67,37 +92,47 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Placeholder Data -->
-                        <tr>
-                            <td>
-                                <strong>Refonte site E-commerce</strong><br>
-                                <small style="color:var(--text-light);">Publié le 10/02/2026</small>
-                            </td>
-                            <td><span style="font-weight:600;">2 500 €</span></td>
-                            <td><span style="padding:2px 8px; border-radius:4px; background:#dcfce7; color:#16a34a; font-size:0.85rem; font-weight:600;">En cours</span></td>
-                            <td>
-                                <div style="display:flex; align-items:center; gap:0.5rem;">
-                                    <div class="avatar" style="width:24px; height:24px; font-size:0.7rem;">J</div>
-                                    Jean D.
-                                </div>
-                            </td>
-                            <td>
-                                <a href="#" class="action-btn btn-edit">💬 Message</a>
-                                <a href="#" class="action-btn btn-validate">✅ Valider livrable</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Logo Startup Tech</strong><br>
-                                <small style="color:var(--text-light);">Publié le 08/02/2026</small>
-                            </td>
-                            <td><span style="font-weight:600;">400 €</span></td>
-                            <td><span style="padding:2px 8px; border-radius:4px; background:#ffedd5; color:#c2410c; font-size:0.85rem; font-weight:600;">En attente</span></td>
-                            <td>-</td>
-                            <td>
-                                <a href="#" class="action-btn btn-edit">✏️ Modifier</a>
-                            </td>
-                        </tr>
+                        <?php if (empty($recentTasks)): ?>
+                            <tr><td colspan="5" style="text-align:center; padding:20px; color:#64748b;">Aucune mission pour le moment.</td></tr>
+                        <?php else: ?>
+                            <?php foreach ($recentTasks as $rt): ?>
+                            <tr>
+                                <td>
+                                    <strong><?= htmlspecialchars($rt['title']) ?></strong><br>
+                                    <small style="color:var(--text-light);">Posté le <?= date('d/m/Y', strtotime($rt['created_at'])) ?></small>
+                                </td>
+                                <td><span style="font-weight:600;"><?= number_format($rt['price'], 0, ',', ' ') ?> €</span></td>
+                                <td>
+                                    <?php 
+                                    $statusLabels = [
+                                        'pending' => ['En attente', '#ffedd5', '#c2410c'],
+                                        'published' => ['Publiée', '#dbeafe', '#2563eb'],
+                                        'in_progress' => ['En cours', '#dcfce7', '#16a34a'],
+                                        'completed' => ['Terminée', '#f1f5f9', '#475569']
+                                    ];
+                                    $s = $statusLabels[$rt['status']] ?? ['Inconnu', '#eee', '#666'];
+                                    ?>
+                                    <span style="padding:2px 8px; border-radius:4px; background:<?= $s[1] ?>; color:<?= $s[2] ?>; font-size:0.85rem; font-weight:600;">
+                                        <?= $s[0] ?>
+                                    </span>
+                                </td>
+                                <td><?= htmlspecialchars($rt['freelance_name'] ?? '-') ?></td>
+                                <td class="actions-cell">
+                                    <div class="action-group">
+                                        <?php if ($rt['status'] === 'in_progress'): ?>
+                                            <a href="index.php?page=collaboration&id=<?= $rt['id'] ?>" class="btn-hub-highlight">
+                                                <span>🚀</span> Hub Travail
+                                            </a>
+                                        <?php elseif ($rt['status'] === 'published'): ?>
+                                            <a href="index.php?page=view_applications&task_id=<?= $rt['id'] ?>" class="action-btn btn-edit">👥 Candidatures</a>
+                                        <?php else: ?>
+                                            <a href="index.php?page=edit_task&id=<?= $rt['id'] ?>" class="action-btn btn-edit">✏️ Modifier</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

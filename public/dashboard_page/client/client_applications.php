@@ -62,18 +62,19 @@
                                             <?= ucfirst($app['status']) ?>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="actions-cell">
                                         <?php if ($app['status'] === 'pending'): ?>
-                                            <div style="display:flex; gap:5px;">
-                                                <form method="POST" action="index.php?page=update_application_status" style="display:inline;">
+                                            <div class="action-group">
+                                                <a href="index.php?page=conversation&task_id=<?= $app['task_id'] ?>&receiver_id=<?= $app['freelance_id'] ?>" class="btn" style="padding:6px 12px; font-size:0.85rem; background:#3b82f6; color:white; text-decoration:none;">💬 Contacter</a>
+                                                <form method="POST" action="index.php?page=update_application_status">
                                                     <input type="hidden" name="application_id" value="<?= $app['id'] ?>">
                                                     <input type="hidden" name="status" value="accepted">
-                                                    <button type="submit" class="btn" style="background:#16a34a; color:white; padding:6px 10px; font-size:0.8rem;">✔ Accepter</button>
+                                                    <button type="submit" class="btn btn-validate" style="padding:6px 12px; font-size:0.85rem;">✔ Accepter</button>
                                                 </form>
-                                                <form method="POST" action="index.php?page=update_application_status" style="display:inline;">
+                                                <form method="POST" action="index.php?page=update_application_status">
                                                     <input type="hidden" name="application_id" value="<?= $app['id'] ?>">
                                                     <input type="hidden" name="status" value="rejected">
-                                                    <button type="submit" class="btn" style="background:#dc2626; color:white; padding:6px 10px; font-size:0.8rem;">✖ user</button>
+                                                    <button type="submit" class="btn btn-error" style="padding:6px 12px; font-size:0.85rem;">✖ Refuser</button>
                                                 </form>
                                             </div>
                                         <?php else: ?>

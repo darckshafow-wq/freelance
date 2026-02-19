@@ -10,10 +10,10 @@
 </head>
 <body>
 
-<?php include __DIR__ . '/../../includes/sidebar_client.php'; ?>
+<?php include __DIR__ . '/../../../includes/sidebar_client.php'; ?>
 
 <main class="main-content">
-    <?php include __DIR__ . '/../../includes/header_client.php'; ?>
+    <?php include __DIR__ . '/../../../includes/header_client.php'; ?>
 
     <div class="content-wrapper">
         <h1 class="page-title">Mes Projets</h1>
